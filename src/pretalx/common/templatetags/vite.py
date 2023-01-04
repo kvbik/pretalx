@@ -23,7 +23,10 @@ if not settings.VITE_DEV_MODE and not settings._VITE_IGNORE:
 
 def generate_script_tag(path, attrs):
     all_attrs = " ".join(f'{key}="{value}"' for key, value in attrs.items())
-    src = urljoin(settings.VITE_DEV_SERVER, path)
+    if settings.VITE_DEV_MODE:
+        src = urljoin(settings.VITE_DEV_SERVER, path)
+    else:
+        src = urljoin(settings.STATIC_URL, path)
     return f'<script {all_attrs} src="{src}"></script>'
 
 
